@@ -1,4 +1,4 @@
-# tester
+# meteorBase - Bash script
 
 @todo
 
