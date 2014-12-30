@@ -1,0 +1,19 @@
+{
+  public: {
+  },
+  private: {
+    "mail": {
+      "protocol": "smtp://",
+      "url": "",
+      "login": "",
+      "password": "",
+      "port": ""
+    },
+    "socials": {
+      "facebook": "",
+      "twitter": "",
+      "google": "",
+      "linkedin": "",
+    }
+  }
+}
