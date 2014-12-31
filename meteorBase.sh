@@ -131,6 +131,18 @@ Template.body.helpers({
     var currentRoute = Router.current();
     return currentRoute && template === currentRoute.lookupTemplate() ? 'active' : '';
   }
+});
+
+Meteor.startup(function() {
+  return SEO.config({
+    title: 'Meteor app test',
+    meta: {
+      'description': 'Structure of a Meteor app minimal load '
+    },
+    og: {
+      'image': 'http://www.bebegavroche.com/media/wysiwyg/mickey.jpg' 
+    }
+  });
 });" >> client/main.js
 
 echo '
@@ -430,6 +442,10 @@ meteor add yogiben:autoform-file
 # Accounts packages
 meteor add accounts-base
 meteor add accounts-password
+
+# Meteor SEO
+# https://atmospherejs.com/manuelschoebel/ms-seo
+meteor add manuelschoebel:ms-seo
 
 
 echo ""
