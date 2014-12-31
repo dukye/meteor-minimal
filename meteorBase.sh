@@ -308,7 +308,7 @@ Disallow :/
 " >> public/robots.txt
 
 # Empty favicon.ico
-touch favicon.ico
+touch public/favicon.ico
 
 
 #
