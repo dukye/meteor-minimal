@@ -356,9 +356,9 @@ mkdir config
 
 # Making settings.development.json
 echo '{
-  public: {
+  "public": {
   },
-  private: {
+  "private": {
     "mail": {
       "protocol": "smtp://",
       "url": "",
@@ -375,8 +375,8 @@ echo '{
   }
 }' >> config/settings.development.json
 
-echo '' >> config/settings.staging.json
-echo '' >> config/settings.production.json
+touch config/settings.staging.json
+touch config/settings.production.json
 
 echo '#!/bin/bash
 ## ######################################
@@ -393,8 +393,8 @@ export PORT="3000"
 export MAIL_URL="smtp://mail.orange.fr"
 ' >> config/development.sh
 
-echo $METEOR_EXPORT >> config/staging.sh
-echo $METEOR_EXPORT >> config/production.sh
+touch config/staging.sh
+touch config/production.sh
 
 
 
