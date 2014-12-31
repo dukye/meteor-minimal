@@ -410,6 +410,8 @@ mkdir tests
 # ######################################################
 mkdir private
 
+meteor add standard-app-packages
+
 meteor add iron:router
 meteor add nemo64:bootstrap less
 
