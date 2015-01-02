@@ -382,7 +382,7 @@ echo '{
       "facebook": "",
       "twitter": "",
       "google": "",
-      "linkedin": "",
+      "linkedin": ""
     }
   }
 }' >> config/settings.development.json
