@@ -20,16 +20,16 @@ fi
 VAR="$1"
 while ! [ -z "${VAR//[a-zA-Z0-9]}" ] || [ -z $VAR ]
 do
-	echo ""
-	echo "# ###########################################"
+  echo ""
+  echo "# ###########################################"
     echo "# "
     echo "# ERROR Meteor APPNAME ! "
     echo "# Enter a valid value or only alphanumeric characters"
     echo "# "
-	echo "# ###########################################"
-	echo ""
-	echo "$ ./meteorBase.sh APPNAME"
-	echo ""
+  echo "# ###########################################"
+  echo ""
+  echo "$ ./meteorBase.sh APPNAME"
+  echo ""
     read VAR
 done
 
@@ -72,66 +72,210 @@ App.launchScreens({
 # ######################################################
 mkdir client
 mkdir client/lib
-mkdir client/templates
-mkdir client/js
+mkdir client/views
+mkdir client/views/_commons
+mkdir client/views/home
 mkdir client/compatibility
 
 # Making template home
 echo '
 <template name="home">
-	<div class="container">
-		<h1>Welcome home</h1>
-	</div>
-</template>' >> client/templates/home.html
+  <div class="container">
+    <h1>Welcome home</h1>
+  </div>
+</template>' >> client/views/home/home.html
 
-echo "console.log('[CLIENT] Loading home.js ...');" >> client/js/home.js
+echo "console.log('[CLIENT] Loading home.js ...');
+
+HomeController = AppController.extend({
+  // template: 'home',
+
+  // layoutTemplate: 'layout',
+  yieldRegions: {
+    'navbar': {to: 'header'},
+    'footer': {to: 'footer'},
+  },
+
+  waitOn: function () {
+    console.log(this.url);
+    console.log('Method waitOn');
+  },
+
+  /**
+   * @desc : Called when the route is first run. It is not called again 
+   * if the route reruns because of a computation invalidation.
+   */
+  onRun: function () {
+    console.log('Method onRun');
+    this.next();
+  },
+
+  /**
+   * @desc : Called if the route reruns because its computation is invalidated.
+   */
+  onRerun: function () {
+    console.log('Method onRerun');
+    this.next();
+  },
+
+  load: function () {
+    console.log('Method load +-------------------------------');
+    this.next();
+  },
+
+  /**
+   * @desc : Called before the route or \"action\" function is run. These hooks 
+   * behave specially. If you want to continue calling the next function you 
+   * must call this.next(). If you don't, downstream onBeforeAction hooks and 
+   * your action function will not be called.
+   */
+  onBeforeAction: function () {
+    console.log('Method onBeforeAction');
+    this.next();
+  },
+
+  before: function () {
+    console.log('Method before');
+    this.next();
+  },
+
+  action: function () {
+    console.log('Method action');
+    this.render();
+  },
+
+  /**
+   * @desc : Called after your route/action function has run or had a chance to run. 
+   * These hooks behave like normal hooks and you don't need to call this.next() 
+   * to move from one to the next.
+   */
+  onAfterAction: function () {
+    console.log('Method onAfterAction');
+  },
+
+  after: function () {
+    console.log('Method after');
+  },
+
+  /**
+   * @desc : Access this data from the associated template.
+   */
+  data: function () {
+    console.log('Method data');
+    return {};
+  },
+
+  /**
+   * @desc : Called when the route is stopped, typically right before a new route is run.
+   */
+  /*
+  stop: function () {
+    console.log('Method stop');
+    // return false;
+    this.next();
+  },
+  */
+
+  /**
+   * @desc : This is called when you navigate to a new route
+   */
+  unload: function () {
+    console.log('Method unload -------------------------------');
+    console.log('');
+    // this.next();
+    return '';
+  },
+
+});
+" >> client/views/home/home.js
+
+echo "body.home {
+  background: #9c0;
+}" >> client/views/home/home.less
+
 
 # head.html
 echo '
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Meteor</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"/>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Meteor</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"/>
 </head>' >> client/head.html
 
 # body.html
 echo '
 <body>
 
-	<nav class="navbar navbar-default" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-id">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/">Meteor app</a>
-			</div>
-
-			<div class="collapse navbar-collapse" id="navbar-collapse-id">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="{{ activeIfTemplateIs "Home" }}"><a href="/">Home</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
 </body>
 ' >> client/body.html
 
+# navbar.html
+echo '
+<template name="navbar">
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-id">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Meteor app</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse-id">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="{{ activeIfTemplateIs "Home" }}"><a href="/">Home</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</template>
+' >> client/views/_commons/navbar.html
+
+# navbar.html
+echo '
+<template name="loading">
+
+  <h1 class="text-center">... Loading ...</h1>
+
+</template>
+' >> client/views/_commons/loading.html
+
+# footer.html
+echo '
+<template name="footer">
+
+  &copy; 2014 - 2015 duke
+
+</template>
+' >> client/views/_commons/footer.html
+
+echo '<template name="layout">
+  <header>
+    {{> yield "header"}}
+  </header>
+  <main>
+    {{> yield}}
+  </main>
+  <footer>
+    {{> yield "footer"}}
+  </footer>
+</template>' >> client/views/layout.html
+
 # main.js
-echo "console.log('[CLIENT] main.* wildcard - Main.js  ...');" >> client/main.js
+echo "console.log('[CLIENT] main.* wildcard - app.js  ...');" >> client/app.js
 echo "
-Template.body.helpers({
-  activeIfTemplateIs: function (template) {
+Template.registerHelper('activeIfTemplateIs', function (template) {
     var currentRoute = Router.current();
     return currentRoute && template === currentRoute.lookupTemplate() ? 'active' : '';
   }
-});
+);
 
 Meteor.startup(function() {
   return SEO.config({
@@ -143,7 +287,9 @@ Meteor.startup(function() {
       'image': 'http://www.bebegavroche.com/media/wysiwyg/mickey.jpg' 
     }
   });
-});" >> client/main.js
+});
+
+" >> client/app.js
 
 echo '
 {"modules": {
@@ -211,9 +357,24 @@ echo "console.log('[COMMON] Loading collections.js ...');" >> lib/collections.js
 
 echo "console.log('[COMMON] Loading routes.js ...');" >> lib/routes.js
 echo "
+Router.configure({
+  layoutTemplate: 'layout',
+  notFoundTemplate: 'notFound',
+  loadingTemplate: 'loading',
+  yieldTemplates: {
+    'navbar': {to: 'header'},
+    'footer': {to: 'footer'},
+  },
+  
+  onAfterAction: function () {
+      document.body.className = this._layout._regions.main._template.trim().toLowerCase();
+  }
+});
+
 Router.map(function () {
   this.route('home', {
-    path: '/'
+    path: '/',
+    controller: 'HomeController'
   });
 });
 " >> lib/routes.js
@@ -226,7 +387,9 @@ Schema = {};
 echo "console.log('[COMMON] Loading constants.js ...');
 
 var \$APP_URL = Meteor.absoluteUrl();
-console.log( 'const APP_URL : ' , \$APP_URL );" >> lib/constants.js
+console.log( 'const APP_URL : ' , \$APP_URL );
+
+AppController = RouteController.extend({});" >> lib/constants.js
 
 
 
@@ -425,6 +588,7 @@ mkdir private
 meteor add standard-app-packages
 
 meteor add iron:router
+meteor add iron:layout
 meteor add nemo64:bootstrap less
 
 # Aldeed packages
