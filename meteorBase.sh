@@ -247,6 +247,15 @@ echo '
 </template>
 ' >> client/views/_commons/loading.html
 
+# notfound.html
+echo '
+<template name="notfound">
+
+  <h1>404 - Page not found</h1>
+
+</template>
+' >> client/views/_commons/notfound.html
+
 # footer.html
 echo '
 <template name="footer">
@@ -359,7 +368,7 @@ echo "console.log('[COMMON] Loading routes.js ...');" >> lib/routes.js
 echo "
 Router.configure({
   layoutTemplate: 'layout',
-  notFoundTemplate: 'notFound',
+  notFoundTemplate: 'notfound',
   loadingTemplate: 'loading',
   yieldTemplates: {
     'navbar': {to: 'header'},
