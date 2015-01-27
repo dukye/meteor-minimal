@@ -366,6 +366,14 @@ echo "console.log('[COMMON] Loading collections.js ...');" >> lib/collections.js
 
 echo "console.log('[COMMON] Loading routes.js ...');" >> lib/routes.js
 echo "
+Router._filters = {
+  resetScroll: function () {
+    var scrollTo = window.currentScroll || 0;
+    \$('body').scrollTop(scrollTo);
+    \$('body').css('min-height', 0);
+  }
+};
+
 Router.configure({
   layoutTemplate: 'layout',
   notFoundTemplate: 'notfound',
@@ -619,6 +627,8 @@ meteor add accounts-password
 # Meteor SEO
 # https://atmospherejs.com/manuelschoebel/ms-seo
 meteor add manuelschoebel:ms-seo
+
+
 
 
 echo ""
