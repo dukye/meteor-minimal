@@ -71,7 +71,7 @@ App.launchScreens({
 # Making Client directory & childs directories
 # ######################################################
 mkdir client
-mkdir client/lib
+mkdir client/assets
 mkdir client/views
 mkdir client/views/_commons
 mkdir client/views/home
@@ -275,7 +275,7 @@ echo '<template name="layout">
   <footer>
     {{> yield "footer"}}
   </footer>
-</template>' >> client/views/layout.html
+</template>' >> client/views/_commons/layout.html
 
 # main.js
 echo "console.log('[CLIENT] main.* wildcard - app.js  ...');" >> client/app.js
@@ -351,7 +351,7 @@ echo '
   "utilities":            false,
   "responsive-utilities": true
 }}
-' >> client/lib/custom.bootstrap.json
+' >> client/assets/custom.bootstrap.json
 
 
 # LIBS
@@ -373,6 +373,7 @@ Router._filters = {
     \$('body').css('min-height', 0);
   }
 };
+var filters = Router._filters;
 
 Router.configure({
   layoutTemplate: 'layout',
